@@ -14,9 +14,10 @@ public class GradeOutputGUI extends javax.swing.JFrame {
      * Creates new form GradeOutputGUI
      */
     private javax.swing.DefaultListModel OutputModel;
+    private float[] ConvertedMark;
     public GradeOutputGUI() {
         initComponents();
-        getAverage();
+        GetRange();
     }
     
     public GradeOutputGUI(javax.swing.DefaultListModel GradeModel) {
@@ -24,25 +25,53 @@ public class GradeOutputGUI extends javax.swing.JFrame {
         OutputModel = GradeModel;
         //SortGrades();
         jList1.setModel(OutputModel);
-        getAverage();
+        ConvertedMark = new float[OutputModel.size()];
+        ConvertToFloat(OutputModel);
+        GetRange();
+        GetAverage();
+        GetMedian();
     }
     
-    private void getAverage(){
-        System.out.println("Hellow !");
-        String temp = OutputModel.getElementAt(0).toString();
-        float min =  Float.parseFloat(temp.substring(temp.indexOf(":")+2,temp.length()));
-        float max = min;
-        for(int i = 0; i<OutputModel.size()-1;i++){
-            temp = OutputModel.getElementAt(i).toString();
-            float tempNumber = Float.parseFloat(temp.substring(temp.indexOf(":")+2,temp.length()));
-            if(tempNumber<min){
-                min = tempNumber;
+    private void ConvertToFloat(javax.swing.DefaultListModel OutputModel){
+       for(int i = 0; i<OutputModel.size();i++){
+           String temp = OutputModel.getElementAt(i).toString();
+           ConvertedMark[i] = Float.parseFloat(temp.substring(temp.indexOf(":")+2,temp.length()));
+       }
+       System.out.println(Arrays.toString(ConvertedMark));
+    }
+    
+    private void GetRange(){
+        float max = ConvertedMark[0], min = ConvertedMark[0];
+        for(int i = 0; i<ConvertedMark.length; i++){
+            if(ConvertedMark[i]>max){
+                max = ConvertedMark[i];
+            }else if(ConvertedMark[i]<min){
+                min = ConvertedMark[i];
             }
-            if(tempNumber>max){
-                max = tempNumber;
-            }
-        } 
+        }
         jLabel6.setText(String.valueOf(max-min));
+    }
+    
+    private void GetAverage(){
+        float total = 0;
+        for(int i = 0; i<ConvertedMark.length; i++){
+           total+=ConvertedMark[i];
+        }
+        jLabel2.setText(String.valueOf(total/ConvertedMark.length));
+    }
+    
+    private void SortGradeFloat(){
+        Arrays.sort(ConvertedMark);
+    }
+    private void GetMedian(){
+        SortGradeFloat();
+        if(ConvertedMark.length%2 == 0){
+            jLabel4.setText(String.valueOf((ConvertedMark[ConvertedMark.length/2]+ConvertedMark[ConvertedMark.length/2-1])/2));
+        }else{
+            jLabel4.setText(String.valueOf(ConvertedMark[(int)(ConvertedMark.length/2)]));
+        }
+        
+        
     }
     
     private void SortGrades(){
@@ -143,7 +172,7 @@ public class GradeOutputGUI extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel4, jLabel6});
@@ -165,7 +194,7 @@ public class GradeOutputGUI extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, jLabel4, jLabel6});
