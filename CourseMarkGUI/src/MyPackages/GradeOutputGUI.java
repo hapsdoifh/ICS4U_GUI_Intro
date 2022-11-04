@@ -135,30 +135,7 @@ public class GradeOutputGUI extends javax.swing.JFrame {
             }
         }
     }
-//    
-//    private void SortGrades(boolean Order){
-//        //float[] sortNumber = new float[OutputModel.size()];
-//        boolean changed = true;
-//        
-//        while(changed){
-//            changed = false;
-//            for(int i = 0; i<OutputModel.size()-1;i++){
-//                String tempA = OutputModel.getElementAt(i).toString();
-//                String tempB = OutputModel.getElementAt(i+1).toString();
-//                System.out.println(tempA);
-//                System.out.println(tempB);
-//                if(tempA.indexOf(":") == -1 || tempB.indexOf(":")==-1){
-//                    continue;
-//                }
-//                if(Order == Float.parseFloat(tempA.substring(tempA.indexOf(":")+2,tempA.length())) > Float.parseFloat(tempB.substring(tempB.indexOf(":")+2,tempB.length()))){
-//                    OutputModel.setElementAt(tempB, i);
-//                    OutputModel.setElementAt(tempA, i+1);
-//                    changed = true;
-//                }
-//            }
-//        }
-//        jList1.setModel(OutputModel);
-//    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
